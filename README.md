@@ -29,3 +29,10 @@ The project uses JUnit tests to test valid and invalid usernames, passwords, cel
 Maven is used to run the automated tests using:
 
 mvn test
+## Author
+
+Musa Mavuso
+
+## Part 1 Status
+
+Part 1 includes the completed registration, validation, login and automated JUnit testing functionality.
