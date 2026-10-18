@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class Message {
 
@@ -113,13 +116,53 @@ public class Message {
     }
 
     public String storeMessage() {
-        return "{\"messageID\":\"" + escapeJson(messageID)
-                + "\",\"messageHash\":\"" + escapeJson(messageHash)
-                + "\",\"recipient\":\"" + escapeJson(recipient)
-                + "\",\"message\":\"" + escapeJson(messageText)
-                + "\",\"status\":\"" + escapeJson(messageStatus)
-                + "\"}";
+
+    String jsonMessage = "{\"messageID\":\"" + escapeJson(messageID)
+            + "\",\"messageHash\":\"" + escapeJson(messageHash)
+            + "\",\"recipient\":\"" + escapeJson(recipient)
+            + "\",\"message\":\"" + escapeJson(messageText)
+            + "\",\"status\":\"" + escapeJson(messageStatus)
+            + "\"}";
+
+    Path filePath = Path.of("messages.json");
+
+    try {
+        String existingJson;
+
+        if (Files.exists(filePath)) {
+            existingJson = Files.readString(filePath).trim();
+        } else {
+            existingJson = "[]";
+        }
+
+        if (existingJson.isEmpty()) {
+            existingJson = "[]";
+        }
+
+        if (!existingJson.startsWith("[") || !existingJson.endsWith("]")) {
+            return "Unable to store message: invalid JSON file.";
+        }
+
+        String contents = existingJson.substring(
+                1, existingJson.length() - 1
+        ).trim();
+
+        String updatedJson;
+
+        if (contents.isEmpty()) {
+            updatedJson = "[" + jsonMessage + "]";
+        } else {
+            updatedJson = "[" + contents + "," + jsonMessage + "]";
+        }
+
+        Files.writeString(filePath, updatedJson);
+
+        return "Message saved to messages.json.";
+
+    } catch (IOException e) {
+        return "Unable to store message: " + e.getMessage();
     }
+}
 
     private String escapeJson(String text) {
         if (text == null) {
