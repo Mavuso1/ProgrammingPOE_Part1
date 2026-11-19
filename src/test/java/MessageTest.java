@@ -152,4 +152,137 @@ public class MessageTest {
 
         assertTrue(message.SentMessage(4).contains("Invalid option"));
     }
+
+    // PART 3 TEST 1: Sent Messages array
+@Test
+public void testSentMessagesArrayPopulated() {
+
+    Message message = new Message(
+            0,
+            "+27718693002",
+            "Hello"
+    );
+
+    message.createMessageHash();
+    message.SentMessage(1);
+
+    assertEquals(1, Message.getSentMessages().length);
+    assertEquals("Sent",
+            Message.getSentMessages()[0].getMessageStatus());
+}
+
+
+// PART 3 TEST 2: Longest stored message
+@Test
+public void testLongestStoredMessage() {
+
+    Message first = new Message(
+            0,
+            "+27718693002",
+            "Hello"
+    );
+
+    Message second = new Message(
+            1,
+            "+27718693002",
+            "This is the longest stored message."
+    );
+
+    first.createMessageHash();
+    second.createMessageHash();
+
+    first.SentMessage(3);
+    second.SentMessage(3);
+
+    assertEquals(
+            second.getMessageText(),
+            Message.getLongestStoredMessage().getMessageText()
+    );
+}
+
+
+// PART 3 TEST 3: Search message by ID
+@Test
+public void testSearchMessageByID() {
+
+    Message message = new Message(
+            0,
+            "+27718693002",
+            "Hello"
+    );
+
+    message.createMessageHash();
+    message.SentMessage(3);
+
+    Message result = Message.findStoredMessageByID(
+            message.getMessageID()
+    );
+
+    assertEquals(message.getMessageID(), result.getMessageID());
+}
+
+
+// PART 3 TEST 4: Search messages by recipient
+@Test
+public void testSearchMessagesByRecipient() {
+
+    Message message = new Message(
+            0,
+            "+27718693002",
+            "Hello"
+    );
+
+    message.createMessageHash();
+    message.SentMessage(3);
+
+    Message[] results =
+            Message.findStoredMessagesByRecipient("+27718693002");
+
+    assertEquals(1, results.length);
+    assertEquals("+27718693002", results[0].getRecipient());
+}
+
+
+// PART 3 TEST 5: Delete message using hash
+@Test
+public void testDeleteMessageByHash() {
+
+    Message message = new Message(
+            0,
+            "+27718693002",
+            "Hello"
+    );
+
+    message.createMessageHash();
+    message.SentMessage(3);
+
+    boolean deleted = Message.deleteStoredMessageByHash(
+            message.getMessageHash()
+    );
+
+    assertEquals(true, deleted);
+    assertEquals(0, Message.getStoredMessages().length);
+}
+
+
+// PART 3 TEST 6: Display full message report
+@Test
+public void testDisplayMessageReport() {
+
+    Message message = new Message(
+            0,
+            "+27718693002",
+            "Hello"
+    );
+
+    message.setSender("Test User");
+    message.createMessageHash();
+    message.SentMessage(3);
+
+    String report = Message.getStoredMessagesReport();
+
+    assertEquals(true, report.contains(message.getMessageID()));
+    assertEquals(true, report.contains("Test User"));
+    assertEquals(true, report.contains("Hello"));
+}
 }
