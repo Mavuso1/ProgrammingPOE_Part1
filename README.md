@@ -1,201 +1,143 @@
-# Programming POE Part 1
-
-## Chat Application
-
-This project is a console-based Java chat application.
-
-## Features
-
-- User registration
-- Username validation
-- Password complexity validation
-- Cell phone number validation
-- User login
-- Login status messages
-- JUnit unit testing
-- Maven automated testing
-
-## Technologies Used
-
-- Java 21
-- Maven
-- JUnit 5
-- Git and GitHub
-
-## Testing
-
-The project uses JUnit tests to test valid and invalid usernames, passwords, cell phone numbers, registration and login.
-
-Maven is used to run the automated tests using:
-
-mvn test
-## Author
-# QuickChat Application — Programming POE Part 2
+# QuickChat – Java Messaging Application
 
 ## 1. Project Overview
 
-QuickChat is a Java console-based messaging application developed for the Programming POE Part 2 assignment.
+QuickChat is a Java-based messaging application developed as part of the PROG5121 Programming Portfolio of Evidence (POE).
 
-The application builds on the registration and login functionality completed in Part 1. After successfully logging in, users can access the QuickChat menu and work with messages.
+The application allows users to register, log in and send messages. Users can also store messages for later, disregard messages and manage stored messages.
 
-The project demonstrates object-oriented programming, input validation, loops, string handling, unit testing, JSON-formatted message storage, and automated testing using GitHub Actions.
+The project demonstrates object-oriented programming, arrays, loops, string manipulation, file handling, JSON storage and unit testing.
 
-## 2. Features
+## 2. Technologies Used
 
-The application includes the following features:
+- Java 21
+- Apache Maven
+- JUnit 5
+- Jackson Databind
+- Visual Studio Code
+- Git and GitHub
 
-* User registration and login.
-* Login protection before accessing the messaging menu.
-* A menu for sending messages, displaying the recently sent messages option, and quitting.
-* Generation of ten-digit message IDs.
-* Recipient cellphone number validation.
-* Message length validation.
-* Automatic message hash generation.
-* Options to send, disregard, or store a message.
-* Display of message details.
-* Counting of successfully sent messages.
-* JSON-formatted storage of messages.
-* JUnit tests for login and messaging functionality.
-* Automated Maven testing through GitHub Actions.
+## 3. Application Features
 
-The recently sent messages menu option currently displays "Coming Soon." as required by the assignment.
+### Part 1 – User Registration and Login
 
-## 3. Technologies Used
+- User registration.
+- Username validation.
+- Password validation.
+- South African cellphone number validation.
+- User login authentication.
 
-* Java 21
-* Apache Maven
-* JUnit 5
-* Visual Studio Code
-* Git and GitHub
-* GitHub Actions
-* JSON
+### Part 2 – Messaging System
+
+- Send messages to recipients.
+- Generate unique message IDs.
+- Generate message hashes.
+- Validate message length.
+- Send, store or disregard messages.
+- Display sent messages and total messages sent.
+
+### Part 3 – Stored Messages
+
+The application uses arrays to manage:
+
+- Sent Messages.
+- Disregarded Messages.
+- Stored Messages.
+- Message Hashes.
+- Message IDs.
+
+The Stored Messages menu provides the following functionality:
+
+1. Display sender and recipient information.
+2. Display the longest stored message.
+3. Search for a message using its ID.
+4. Search for messages using a recipient's number.
+5. Delete a stored message using its hash.
+6. Display a full report of stored messages.
+
+Stored messages are saved in a JSON file and can be loaded when the application runs.
 
 ## 4. Project Structure
 
 ```text
 ProgrammingPOE_Part1/
-├── .github/
-│   └── workflows/
-│       └── maven.yml
+│
 ├── src/
 │   ├── main/
 │   │   └── java/
 │   │       ├── Main.java
 │   │       ├── Login.java
 │   │       └── Message.java
+│   │
 │   └── test/
 │       └── java/
 │           ├── LoginTest.java
 │           └── MessageTest.java
+│
 ├── messages.json
 ├── pom.xml
 ├── README.md
 └── .gitignore
 ```
 
-The `messages.json` file is created when a message is stored. It may not exist until the store-message feature has been used.
+## 5. Requirements
 
-## 5. How to Run the Application
+To run the application, you need:
 
-### Requirements
+- Java Development Kit (JDK) 21.
+- Apache Maven.
+- Visual Studio Code or another Java-compatible IDE.
 
-Install Java 21 and Apache Maven, and ensure that both are available from the terminal.
+## 6. Running the Application
 
-### Run the tests
+Open the project folder in Visual Studio Code.
 
-Open a terminal in the project directory and run:
-
-```bash
-mvn clean test
-```
-
-Maven compiles the project and runs the automated unit tests.
-
-### Compile the application
-
-Run:
-
-```bash
-mvn compile
-```
-
-### Start QuickChat
-
-Run:
-
-```bash
-java -cp target/classes Main
-```
-
-Follow the prompts to register, log in, and access the QuickChat menu.
-
-## 6. QuickChat Menu
-
-After successful login, the application displays the following menu:
-
-1. Send Messages
-2. Show recently sent messages
-3. Quit
-
-Users specify how many messages they want to enter. They can then enter recipient details, write a message, and choose an action.
-
-The available message actions are:
-
-* Send Message
-* Disregard Message
-* Store Message to send later
-
-## 7. Message Validation and Storage
-
-Each message receives a ten-digit message ID.
-
-The application validates recipient cellphone numbers and checks that messages do not exceed 250 characters.
-
-A message hash is created using the first two digits of the message ID, the message number, and the first and last words of the message.
-
-Stored messages are written to `messages.json` in JSON format.
-
-## 8. Unit Testing
-
-JUnit tests are included for the login and messaging functionality.
-
-The messaging tests cover:
-
-* Message ID generation.
-* Recipient number validation.
-* Message length validation.
-* Message hash generation.
-* Sending messages.
-* Disregarding messages.
-* Storing messages.
-* Invalid message actions.
-
-Run all tests with:
+Open the integrated terminal and run:
 
 ```bash
 mvn clean test
 ```
 
-## 9. GitHub Actions
+To run the application:
 
-The project includes a GitHub Actions workflow located at:
+```bash
+mvn exec:java "-Dexec.mainClass=Main"
+```
 
-`.github/workflows/maven.yml`
+## 7. Running Unit Tests
 
-The workflow automatically runs the Maven tests when changes are pushed to the configured branches or when a pull request targets the configured main branch.
+The project uses JUnit 5 to test the application's functionality.
 
-This helps identify errors and confirms whether the automated tests pass in the GitHub environment.
+Run the following command:
+
+```bash
+mvn clean test
+```
+
+Maven will compile the project and execute the available unit tests.
+
+A successful execution displays:
+
+```text
+BUILD SUCCESS
+```
+
+## 8. JSON Message Storage
+
+The application uses the Jackson Databind library to read and update stored messages in `messages.json`.
+
+Stored messages can be loaded into the application and managed through the Stored Messages menu.
+
+## 9. GitHub Repository
+
+The project is maintained using Git and GitHub.
+
+The final Part 3 implementation is available in the `part3-final` branch.
+
+Repository: https://github.com/Mavuso1/ProgrammingPOE_Part1
 
 ## 10. Conclusion
 
-This project extends the original registration and login application by introducing messaging functionality.
+QuickChat demonstrates the development of a Java messaging application through three stages.
 
-It demonstrates the use of Java classes and methods, loops, string handling, input validation, unit testing, JSON-formatted storage, and automated testing.
-
-The project was developed and managed using Git and GitHub.
-
-Musa Mavuso
-
-## Part 1 Status
-
-Part 1 includes the completed registration, validation, login and automated JUnit testing functionality.
+The final application combines user authentication, message management, JSON storage, arrays and automated testing.
