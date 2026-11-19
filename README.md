@@ -141,3 +141,4 @@ Repository: https://github.com/Mavuso1/ProgrammingPOE_Part1
 QuickChat demonstrates the development of a Java messaging application through three stages.
 
 The final application combines user authentication, message management, JSON storage, arrays and automated testing.
+The final application combines user authentication, message management, JSON storage, arrays and automated testing.
